@@ -1,12 +1,12 @@
 // Classe do objeto despesa
 class Despesa {
 	constructor(ano, mes, dia, tipo, descricao, valor) {
-		this.ano = parseInt(ano)
-		this.mes = parseInt(mes)
-		this.dia = parseInt(dia)
-		this.tipo = parseInt(tipo)
+		this.ano = isNaN(parseInt(ano)) ? '' : parseInt(ano)
+		this.mes = isNaN(parseInt(mes)) ? '' : parseInt(mes)
+		this.dia = isNaN(parseInt(dia)) ? '' : parseInt(dia)
+		this.tipo = isNaN(parseInt(tipo)) ? '' : parseInt(tipo)
 		this.descricao = descricao
-		this.valor = parseFloat(valor)
+		this.valor = isNaN(parseFloat(valor)) ? '' : parseFloat(valor)
 	}
 
 	validarDados() {
@@ -97,6 +97,7 @@ function cadastrarDespesa() {
 		bd.gravar(despesa)
 		// dialog de sucesso
 		carregarModalSucesso()
+		limparCampos(ano, mes, dia, tipo, descricao, valor)
 	} else {
 		// dialog de erro
 		carregarModalErro()
@@ -170,4 +171,14 @@ function formatarTipo(tipo) {
 		case 5:
 			return 'Transporte'
 	}
+}
+
+// Função para limpar os campos do formulário
+function limparCampos(ano, mes, dia, tipo, descricao, valor) {
+	ano.value = ''
+	mes.value = ''
+	dia.value = ''
+	tipo.value = ''
+	descricao.value = ''
+	valor.value = ''
 }
