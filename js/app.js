@@ -68,7 +68,15 @@ class BD {
 	}
 
 	pesquisar(d) {
-		console.log(d)
+		let despesasFiltradas = this.recuperarTodosRegistros()
+
+		for (let chave in d) {
+			if (d[chave] !== '') {
+				despesasFiltradas = despesasFiltradas.filter(despesa => despesa[chave] == d[chave])
+			}
+		}
+		
+		console.log(despesasFiltradas)
 	}
 }
 
