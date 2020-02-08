@@ -43,12 +43,44 @@ class BD {
 
 		localStorage.setItem('id', id)
 	}
+
+	recuperarTodosRegistros() {
+		// array de despesas
+		let despesas = []
+
+		let id = parseInt(localStorage.getItem('id'))
+
+		// recuperar todas as despesas cadastradas em Local Storage
+		for (let i = 1; i <= id; i++) {
+			// recuperar a despesa
+			let despesa = JSON.parse(localStorage.getItem(`despesa${i}`))
+			
+			// existe a possibilidade de haver índices que foram pulados/removidos
+			// nestes casos nós iremos pular esses índices
+			if (!despesa) {
+				continue
+			}
+
+			despesas.push(despesa)
+		}
+
+		return despesas
+	}
 }
 
 let bd = new BD()
 
 // Eventos da página
-document.getElementById('cadastrar').addEventListener('click', cadastrarDespesa, false)
+let caminho = window.location.pathname
+let arquivo = extrairArquivo(caminho).arquivo
+
+if (arquivo === 'index.html') {
+	document.getElementById('cadastrar').addEventListener('click', cadastrarDespesa, false)
+}
+
+if (arquivo === 'consulta.html') {
+	document.body.addEventListener('load', carregaListaDespesas, true)
+}
 
 // Função para recuperar os dados do formulário de cadastro
 function cadastrarDespesa() {
@@ -71,6 +103,12 @@ function cadastrarDespesa() {
 	}
 }
 
+function carregaListaDespesas() {
+	let despesas = bd.recuperarTodosRegistros()
+
+	console.log(despesas)
+}
+
 // Função para carregar modal de sucesso
 function carregarModalSucesso() {
 	document.getElementById('modalCabecalho').className = 'modal-header text-success'
@@ -91,4 +129,12 @@ function carregarModalErro() {
 	document.getElementById('modalBtn').innerHTML = 'Voltar e corrigir'
 
 	$('#modalRegistraDespesa').modal('show')
+}
+
+// Função para extrair nome e extensão do arquivo
+function extrairArquivo(caminho){
+	caminho	= caminho.replace("/\/g", "/")
+	let arquivo = caminho.substring(caminho.lastIndexOf('/') + 1)
+	let extensao = arquivo.substring(arquivo.lastIndexOf('.') + 1)
+	return {arquivo, extensao}
 }
