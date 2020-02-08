@@ -1,12 +1,12 @@
 // Classe do objeto despesa
 class Despesa {
 	constructor(ano, mes, dia, tipo, descricao, valor) {
-		this.ano = ano
-		this.mes = mes
-		this.dia = dia
-		this.tipo = tipo
+		this.ano = parseInt(ano)
+		this.mes = parseInt(mes)
+		this.dia = parseInt(dia)
+		this.tipo = parseInt(tipo)
 		this.descricao = descricao
-		this.valor = valor
+		this.valor = parseFloat(valor)
 	}
 
 	validarDados() {
@@ -94,7 +94,7 @@ function cadastrarDespesa() {
 	let despesa = new Despesa(ano.value, mes.value, dia.value, tipo.value, descricao.value, valor.value)
 
 	if (despesa.validarDados()) {
-		//bd.gravar(despesa)
+		bd.gravar(despesa)
 		// dialog de sucesso
 		carregarModalSucesso()
 	} else {
@@ -106,7 +106,20 @@ function cadastrarDespesa() {
 function carregaListaDespesas() {
 	let despesas = bd.recuperarTodosRegistros()
 
-	console.log(despesas)
+	// selecionando o elemnto tbody da tabela
+	let listaDespesas = document.getElementById('listaDespesas')
+
+	// percorrer o array despesas, listando cada despesa de forma dinâmica
+	despesas.forEach(d => {
+		// criando a linha (tr)
+		let linha = listaDespesas.insertRow()
+
+		// criar as colunas (td)
+		linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
+		linha.insertCell(1).innerHTML = formatarTipo(d.tipo)
+		linha.insertCell(2).innerHTML = d.descricao
+		linha.insertCell(3).innerHTML = d.valor
+	})
 }
 
 // Função para carregar modal de sucesso
@@ -137,4 +150,24 @@ function extrairArquivo(caminho){
 	let arquivo = caminho.substring(caminho.lastIndexOf('/') + 1)
 	let extensao = arquivo.substring(arquivo.lastIndexOf('.') + 1)
 	return {arquivo, extensao}
+}
+
+// Função para ajustar o tipo
+function formatarTipo(tipo) {
+	switch (tipo) {
+		case 1:
+			return 'Alimentação'
+
+		case 2:
+			return 'Educação'
+
+		case 3:
+			return 'Lazer'
+
+		case 4:
+			return 'Saúde'
+
+		case 5:
+			return 'Transporte'
+	}
 }
