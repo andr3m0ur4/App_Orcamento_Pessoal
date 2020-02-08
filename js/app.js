@@ -8,6 +8,15 @@ class Despesa {
 		this.descricao = descricao
 		this.valor = valor
 	}
+
+	validarDados() {
+		for (let i in this) {
+			if (this[i] == undefined || this[i] == null || this[i] == '') {
+				return false
+			}
+		}
+		return true
+	}
 }
 
 // Classe para criação de índices dinâmicos no Local Storage
@@ -51,6 +60,13 @@ function cadastrarDespesa() {
 	let valor = document.getElementById('valor')
 
 	let despesa = new Despesa(ano.value, mes.value, dia.value, tipo.value, descricao.value, valor.value)
-	
-	bd.gravar(despesa)
+
+	if (despesa.validarDados()) {
+		//bd.gravar(despesa)
+		// dialog de sucesso
+		console.log('Dados válidos')
+	} else {
+		// dialog de erro
+		console.log('Dados inválidos')
+	}
 }
