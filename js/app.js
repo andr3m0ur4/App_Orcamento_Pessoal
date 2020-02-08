@@ -62,11 +62,33 @@ function cadastrarDespesa() {
 	let despesa = new Despesa(ano.value, mes.value, dia.value, tipo.value, descricao.value, valor.value)
 
 	if (despesa.validarDados()) {
-		bd.gravar(despesa)
+		//bd.gravar(despesa)
 		// dialog de sucesso
-		$('#sucessoGravacao').modal('show')
+		carregarModalSucesso()
 	} else {
 		// dialog de erro
-		$('#erroGravacao').modal('show')
+		carregarModalErro()
 	}
+}
+
+// Função para carregar modal de sucesso
+function carregarModalSucesso() {
+	document.getElementById('modalCabecalho').className = 'modal-header text-success'
+	document.getElementById('modalTitulo').innerHTML = 'Registro inserido com sucesso'
+	document.getElementById('modalConteudo').innerHTML = 'Despesa foi cadastrada com sucesso!'
+	document.getElementById('modalBtn').className = 'btn btn-success'
+	document.getElementById('modalBtn').innerHTML = 'Voltar'
+
+	$('#modalRegistraDespesa').modal('show')
+}
+
+// Função para carregar modal de erro
+function carregarModalErro() {
+	document.getElementById('modalCabecalho').className = 'modal-header text-danger'
+	document.getElementById('modalTitulo').innerHTML = 'Erro na gravação do registro'
+	document.getElementById('modalConteudo').innerHTML = 'Existem campos obrigatórios que não foram preenchidos!'
+	document.getElementById('modalBtn').className = 'btn btn-danger'
+	document.getElementById('modalBtn').innerHTML = 'Voltar e corrigir'
+
+	$('#modalRegistraDespesa').modal('show')
 }
