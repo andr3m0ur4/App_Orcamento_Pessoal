@@ -106,21 +106,43 @@
 
             <div class="row">
                 <div class="col">
-                    <table class="table" >
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Tipo</th>
-                                <th>Descrição</th>
-                                <th>Valor</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                    <div class="table-responsive">
+                        <table class="table" >
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Tipo</th>
+                                    <th>Descrição</th>
+                                    <th>Valor</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-                        <tbody id="listaDespesas">
-                            
-                        </tbody>
-                    </table>
+                            <tbody id="listaDespesas">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalRemocaoDespesa" tabindex="-1" role="dialog" aria-labelledby="modalTitulo" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div id="modalCabecalho">
+                        <h5 class="modal-title" id="modalTitulo"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalConteudo">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modalBtn" data-dismiss="modal"></button>
+                    </div>
                 </div>
             </div>
         </div>

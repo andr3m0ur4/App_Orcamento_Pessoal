@@ -84,7 +84,7 @@ class BD {
 	remover(id) {
 		localStorage.removeItem(id)
 
-		carregaListaDespesas(false)
+		carregarModalRemocao()
 	}
 }
 
@@ -142,7 +142,7 @@ function carregaListaDespesas(evento, despesas = bd.recuperarTodosRegistros()) {
 		let i = document.createElement('i')
 		btn.className = 'btn btn-danger'
 		btn.id = `despesa${d.id}`
-		btn.onclick = () => {bd.remover(btn.id)}
+		btn.onclick = () => { bd.remover(btn.id) }
 		btn.append(i)
 		i.className = 'fas fa-times'
 
@@ -191,6 +191,18 @@ function carregarModalErro() {
 	document.getElementById('modalBtn').innerHTML = 'Voltar e corrigir'
 
 	$('#modalRegistraDespesa').modal('show')
+}
+
+// Função para carregar modal de erro
+function carregarModalRemocao() {
+	document.getElementById('modalCabecalho').className = 'modal-header text-success'
+	document.getElementById('modalTitulo').innerHTML = 'Registro excluído com sucesso'
+	document.getElementById('modalConteudo').innerHTML = 'Despesa foi removida com sucesso!'
+	document.getElementById('modalBtn').className = 'btn btn-success'
+	document.getElementById('modalBtn').innerHTML = 'Fechar'
+	document.getElementById('modalBtn').onclick = () => { carregaListaDespesas(false) }
+
+	$('#modalRemocaoDespesa').modal('show')
 }
 
 // Função para extrair nome e extensão do arquivo
