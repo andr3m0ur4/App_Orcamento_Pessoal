@@ -76,7 +76,7 @@ class BD {
 			}
 		}
 		
-		console.log(despesasFiltradas)
+		return despesasFiltradas
 	}
 }
 
@@ -118,11 +118,11 @@ function cadastrarDespesa() {
 }
 
 // Função para carregar a lista de despesas
-function carregaListaDespesas() {
-	let despesas = bd.recuperarTodosRegistros()
+function carregaListaDespesas(evento, despesas = bd.recuperarTodosRegistros()) {
 
 	// selecionando o elemnto tbody da tabela
 	let listaDespesas = document.getElementById('listaDespesas')
+	listaDespesas.innerHTML = ''
 
 	// percorrer o array despesas, listando cada despesa de forma dinâmica
 	despesas.forEach(d => {
@@ -148,7 +148,9 @@ function pesquisarDespesas() {
 
 	let despesa = new Despesa(ano.value, mes.value, dia.value, tipo.value, descricao.value, valor.value)
 
-	bd.pesquisar(despesa)
+	let despesas = bd.pesquisar(despesa)
+
+	carregaListaDespesas(false, despesas)
 }
 
 // Função para carregar modal de sucesso
