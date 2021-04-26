@@ -91,16 +91,16 @@ class BD {
 let bd = new BD()
 
 // Eventos da página
-let caminho = window.location.pathname
-let arquivo = extrairArquivo(caminho).arquivo
+const caminho = window.location.pathname.split('/')
+	.slice(window.location.pathname.split('/').length - 1).toString()
 
-if (arquivo === 'index.html') {
-	document.getElementById('cadastrar').addEventListener('click', cadastrarDespesa, false)
+if (caminho === '' || caminho === 'index.html') {
+	document.getElementById('cadastrar').onclick = () => cadastrarDespesa()
 }
 
-if (arquivo === 'consulta.html') {
-	document.body.addEventListener('load', carregaListaDespesas, true)
-	document.getElementById('pesquisar').addEventListener('click', pesquisarDespesas, false)
+if (caminho === 'consulta.html') {
+	document.body.onload = () => carregaListaDespesas()
+	document.getElementById('pesquisar').onclick = () => pesquisarDespesas()
 }
 
 // Função para recuperar os dados do formulário de cadastro
@@ -203,14 +203,6 @@ function carregarModalRemocao() {
 	document.getElementById('modalBtn').onclick = () => { carregaListaDespesas(false) }
 
 	$('#modalRemocaoDespesa').modal('show')
-}
-
-// Função para extrair nome e extensão do arquivo
-function extrairArquivo(caminho){
-	caminho	= caminho.replace("/\/g", "/")
-	let arquivo = caminho.substring(caminho.lastIndexOf('/') + 1)
-	let extensao = arquivo.substring(arquivo.lastIndexOf('.') + 1)
-	return {arquivo, extensao}
 }
 
 // Função para ajustar o tipo
